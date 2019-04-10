@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Error from './components/error/Error';
+import Error from './pages/error/Error';
 import TodoInfo from './pages/single-todo/TodoEdit';
 import Home from './pages/home/Home';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';

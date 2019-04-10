@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import todoService from '../../lib/services/TodoService';
+import todoServices from '../../lib/services/TodoService';
 import Input from '../../components/input/Input';
+import Form from '../../components/form/Form';
 import './TodoEdit.scss';
 
 class TodoEdit extends Component {
@@ -16,7 +17,7 @@ class TodoEdit extends Component {
   }
 
   getTodoInfo = async () => {
-    const todo = await todoService.getOneTodo(this.props.match.params.id);
+    const todo = await todoServices.getOneTodo(this.props.match.params.id);
 
     this.setState({
       todo,
@@ -43,7 +44,7 @@ class TodoEdit extends Component {
   onSubmit = async (event) => {
     event.preventDefault();
 
-    await todoService.updateTodo(this.props.match.params.id, this.state.todo)
+    await todoServices.updateTodo(this.props.match.params.id, this.state.todo)
 
     this.props.history.push('/')
 
@@ -59,13 +60,17 @@ class TodoEdit extends Component {
     }
 
     return (
-      loading ? <h1>Loading...</h1> : <form className='container edit-form' onSubmit={this.onSubmit}>
-        {arrayOfTodoProps.map(todoProp => {
-          const holder = todoProp.charAt(0).toUpperCase() + todoProp.slice(1);
-          return <Input key={todoProp} name={todoProp} value={this.state[todoProp]} placeholder={holder} changeCallback={this.onChangeInput} />
-        })}
-        <button>Edit Todo</button>
-      </form>
+      loading ? <h1>Loading...</h1> :
+
+        <Form dataForm={this.state.todo} />
+
+      // <form className='container edit-form' onSubmit={this.onSubmit}>
+      //   {arrayOfTodoProps.map(todoProp => {
+      //     const holder = todoProp.charAt(0).toUpperCase() + todoProp.slice(1);
+      //     return <Input key={todoProp} name={todoProp} value={this.state[todoProp]} placeholder={holder} changeCallback={this.onChangeInput} />
+      //   })}
+      //   <button>Edit Todo</button>
+      // </form>
 
     )
   }

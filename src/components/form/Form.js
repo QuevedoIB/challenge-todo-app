@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import './Form.scss';
 import Input from '../input/Input';
-import todoService from '../../lib/services/TodoService';
+import todoServices from '../../lib/services/TodoService';
+import { withRouter } from 'react-router-dom';
 
-export default class Form extends Component {
+class Form extends Component {
 
   state = {
     title: '',
     body: '',
+  }
+
+  componentDidMount = () => {
+    if (this.props.dataForm) {
+      this.setState(this.props.dataForm);
+    }
   }
 
   onChangeInput = (event) => {
@@ -23,7 +30,12 @@ export default class Form extends Component {
   onSubmit = async (event) => {
     event.preventDefault();
 
-    await todoService.createTodo(this.state);
+    if (this.props.dataForm) {
+      await todoServices.updateTodo(this.props.match.params.id, this.state)
+      return this.props.history.push('/');
+    }
+
+    await todoServices.createTodo(this.state);
 
     this.setState({
       title: '',
@@ -53,3 +65,5 @@ export default class Form extends Component {
     )
   }
 }
+
+export default withRouter(Form);
