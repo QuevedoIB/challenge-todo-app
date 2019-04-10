@@ -1,0 +1,10 @@
+.list-box {
+  margin: 10vh 0;
+  section {
+    margin-top: 3vh;
+    border: 1px solid rgba(75,75,75, 0.5);
+    padding: 2vh;
+    max-height: 55vh;
+    overflow: scroll;
+  }
+}
